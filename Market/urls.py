@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from consumer.views.views_product import HomeView
+from consumer.views.views_product import all_products
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('consumer/', include('django.contrib.auth.urls')),
     path('consumer/', include('consumer.urls')),  # ALl urls in consumer url file will start with this.
-    path('', HomeView.as_view(), name='home')
+    path('', all_products, name='home'),
 ]
