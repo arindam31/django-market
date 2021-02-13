@@ -13,14 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
+# 3rd part imports.
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
 from consumer.views.views_product import all_products
+from consumer.serializers import UserViewSet, ProductViewSet, ProductCategoryViewSet
+from consumer.serializers import SellerViewSet, BrandViewSet
 
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'products', ProductViewSet)
+router.register(r'productcategories', ProductCategoryViewSet)
+router.register(r'brands', BrandViewSet)
+router.register(r'sellers', SellerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('consumer/', include('django.contrib.auth.urls')),
-    path('consumer/', include('consumer.urls')),  # ALl urls in consumer url file will start with this.
+    path('consumer/', include('consumer.urls', namespace='consumer')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', all_products, name='home'),
+    path('api/v1/consumer/', include(router.urls)),
 ]
