@@ -4,7 +4,7 @@ Views for Product.
 
 from django.db.models import Q
 from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import DetailView, TemplateView
 
 from consumer.models import Product, ProductCategory
 
