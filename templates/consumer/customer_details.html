@@ -5,11 +5,13 @@
 {% endblock title %}
 
 {% block content %}
+<div class="container">
     <div class="jumbotron border rounded">
-        <p>Username: {{ user.username }}</p>
-        <p>Full name: {{ user.first_name }} {{ user.last_name }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>Age: {{ user.age }}</p>
+        <h1 class="display-4">Full name: {{ user.first_name }} {{ user.last_name }}</h1>
+        <p class="lead">Username: {{ user.username }}</p>
+        <p class="lead">Email: {{ user.email }}</p>
+        <p class="lead">Age: {{ user.age }}</p>
     </div>
+</div>
 
 {% endblock content %}

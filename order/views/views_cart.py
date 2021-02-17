@@ -1,21 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from order.models import Cart, CartItem
-from consumer.models import CustomUser, Product
+from consumer.models import Product
 
 
 def get_cart(request):
     user = request.user
+    if not user.is_authenticated:
+        redirect('login')
+
     if request.method == 'GET':
         cart = Cart.objects.get(consumer=user)
         return render(request, template_name='order/cart.html', context={'cart': cart})
 
 
 def add_to_cart(request, product_id):
-    user = request.user
+    """Add items to Cart.
+
+    :param request: django request
+    :param product_id: Id of Product.
+    """
+    if request.user.is_anonymous:
+        return redirect('consumer:register')
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     if request.method == 'GET':
         product = Product.objects.get(id=product_id)
-        cart, created = Cart.objects.get_or_create(consumer=user)
+        cart, created = Cart.objects.get_or_create(consumer=request.user)
         if cart.cart_item.filter(item=product).exists():
             _cart_item = CartItem.objects.get(item=product)
             _cart_item.quantity += 1
