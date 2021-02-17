@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ user }}'s Cart
+{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+<ul class="list-group">
+{% for cart_item in cart.cart_item.all %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <p>{{ cart_item.item.name }}, {{ cart_item.item.brand.name }}</p>
+
+    <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.quantity }}</span></p>
+</li>
+{% endfor %}
+</ul>
+</div>
+
+<a href="" class="btn btn-success">CheckOut</a>
+{% endblock content %}

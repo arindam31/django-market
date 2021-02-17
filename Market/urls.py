@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('consumer/', include('django.contrib.auth.urls')),
     path('consumer/', include('consumer.urls')),  # ALl urls in consumer url file will start with this.
+    path('order/', include('order.urls')),  # ALl urls in consumer url file will start with this.
     path('', all_products, name='home'),
 ]
