@@ -29,7 +29,7 @@
             <li class="nav-item active">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{% url 'profile' user.pk %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'consumer:profile' user.pk %}">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Order History</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -43,7 +43,7 @@
                 <ul class="dropdown-menu" aria-labelledby="productDropdown">
                     <li><a class="dropdown-item" href="{% url 'home' %}">All</a></li>
                     {% for category in categories %}
-                        <li><a class="dropdown-item" href="{% url 'product_by_category' category.pk %}">{{ category }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'consumer:product_by_category' category.pk %}">{{ category }}</a></li>
                     {% endfor %}
                 </ul>
             </li>
@@ -63,12 +63,12 @@
                     <a href="{% url 'login' %}" class="btn btn-outline-secondary">Login</a>
                 </li>
                 <li class="mx-1">
-                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Signup</a>
+                    <a href="{% url 'consumer:register' %}" class="btn btn-outline-primary">Signup</a>
                 </li>
             </ul>
         {% endif %}
 
-        <form class="form-inline my-2 my-md-0" method="get" action="{% url 'search_product' %}">
+        <form class="form-inline my-2 my-md-0" method="get" action="{% url 'consumer:search_product' %}">
             <div class="form-group">
                 <input class="form-control" type="search" placeholder="Enter product" aria-label="Search" name="keyword">
             </div>

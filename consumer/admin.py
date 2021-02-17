@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import Product, ProductCategory
-from .models import Seller, CustomUser, Brand
+from .models import Brand, CustomUser, Product, ProductCategory, Seller
 
 
 class CustomUserAdmin(UserAdmin):

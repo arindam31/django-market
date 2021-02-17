@@ -1,8 +1,8 @@
-from django.views.generic import CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.utils import timezone
-from consumer.forms import CustomUserCreationForm, CustomUserChangeForm
+from django.views.generic import CreateView, DetailView, UpdateView
 
+from consumer.forms import CustomUserChangeForm, CustomUserCreationForm
 from consumer.models import CustomUser
 
 

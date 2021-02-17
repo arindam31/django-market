@@ -15,8 +15,8 @@
                     <p class="card-text">{{ product.description }}</p>
                     <p>Brand: {{ product.brand.name }}</p>
                     <p>Category: {{ product.product_category.name }}</p>
-                        <a href="{% url 'product_details' product.pk %}">Details</a>
                         <a href="{% url 'add_to_cart' product.pk %}">Add to Cart</a>
+                        <a href="{% url 'consumer:product_details' product.pk %}">Details</a>
                 </div>
             </div>
         </div>

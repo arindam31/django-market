@@ -188,3 +188,17 @@ LOGGING = {
         },
     }
 }
+
+###################################
+# REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (  # Find USER
+        'rest_framework.authentication.SessionAuthentication',
+        ),
+    'DEFAULT_PERMISSION_CLASSES': (  # User can DO this and that
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+
+        )
+}
+
+APPEND_SLASH = True
