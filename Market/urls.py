@@ -33,6 +33,7 @@ router.register(r'sellers', SellerViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('consumer/', include('django.contrib.auth.urls')),
+    path('order/', include('order.urls')),  # All urls in consumer url file will start with this.
     path('consumer/', include('consumer.urls', namespace='consumer')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', all_products, name='home'),

@@ -5,27 +5,28 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
+<div class="container">
+    <div class="row my-4">
     {% for product in products %}
-        <div class="col-md-auto">
+        <div class="col-2">
             <div class="card" style="width: 12rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description }}</p>
                     <p>Brand: {{ product.brand.name }}</p>
                     <p>Category: {{ product.product_category.name }}</p>
+                        <a href="{% url 'add_to_cart' product.pk %}">Add to Cart</a>
                         <a href="{% url 'consumer:product_details' product.pk %}">Details</a>
-                        <a href="#">Add to Cart</a>
                 </div>
             </div>
         </div>
 
-    {% if forloop.counter|divisibleby:"6" %}
-        </div>
-        <div class="row">
-    {% endif %}
+        {% if forloop.counter|divisibleby:"5" %}
+            </div>
+            <div class="row my-4">
+        {% endif %}
 
     {% endfor %}
     </div>
-
+</div>
 {% endblock content %}
