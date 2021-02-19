@@ -11,7 +11,10 @@ def get_cart(request):
 
     if request.method == 'GET':
         cart = Cart.objects.get(consumer=user)
-        return render(request, template_name='order/cart.html', context={'cart': cart})
+        amount_each_item, total_bill = cart.cart_each_item_total()
+        return render(request,
+                      template_name='order/cart.html',
+                      context={'cart': amount_each_item, 'cart_total': total_bill})
 
 
 def add_to_cart(request, product_id):
@@ -36,5 +39,5 @@ def add_to_cart(request, product_id):
         else:
             _cart_item = CartItem.objects.create(item=product, quantity=1)
             cart.cart_item.add(_cart_item)
-        return render(request, template_name='order/cart.html', context={'cart': cart})
+        return redirect('order:user_cart')
 

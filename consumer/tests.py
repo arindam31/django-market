@@ -50,11 +50,11 @@ class SignUpPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
-        response = self.client.get(reverse('register'))
+        response = self.client.get(reverse('consumer:register'))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        response = self.client.get(reverse('register'))
+        response = self.client.get(reverse('consumer:register'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('registration/register.html')
 
@@ -66,7 +66,6 @@ class SignUpPageTests(TestCase):
 
 
 class TestApiConsumer(APITestCase):
-
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user('SomeOne', 'mymail@ex.com', age=10)

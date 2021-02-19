@@ -50,14 +50,18 @@ class Brand(models.Model):
         return self.name
 
 
+class Currency(models.Model):
+    name = models.CharField(max_length=50)
+    value = models.DecimalField(max_digits=7, decimal_places=2, default=0)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=300)
     product_category = models.ForeignKey(ProductCategory, on_delete=models.RESTRICT)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=3)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=1)
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name
-
-

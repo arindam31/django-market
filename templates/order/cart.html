@@ -8,16 +8,33 @@
 <div class="container">
     <div class="my-4">
     <ul class="list-group">
-    {% for cart_item in cart.cart_item.all %}
+    {% for cart_item in cart %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <p>{{ cart_item.item.name }}, {{ cart_item.item.brand.name }}</p>
+        <p>{{ cart_item.item.price }}</p>
 
         <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.quantity }}</span></p>
+        <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.unit_total }}</span></p>
     </li>
     {% endfor %}
     </ul>
     </div>
     <hr class="my-4">
-    <a href="" class="btn btn-success">CheckOut</a>
+    <div class="card">
+  <h5 class="card-header">Summary</h5>
+  <div class="card-body">
+
+    <p class="card-text">
+        <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Total Amount</p>
+            <p><span class="justify-content-between">{{ cart_total.unit_total__sum }}</span></p>
+        </li>
+        </ul>
+      </p>
+    <a href="#" class="btn btn-success">CheckOut</a>
+  </div>
+</div>
+
 </div>
 {% endblock content %}
