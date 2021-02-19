@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import Brand, CustomUser, Product, ProductCategory, Seller
+from .models import Currency
 
 
 class CustomUserAdmin(UserAdmin):
@@ -20,9 +21,9 @@ class CustomUserAdmin(UserAdmin):
 class ProductAdmin(admin.ModelAdmin):
     model = Product
 
-    list_display = ['name', 'product_category', 'seller', 'brand']
+    list_display = ['name', 'product_category', 'seller', 'brand', 'price']
 
-    fields = ('name', 'description', 'product_category', 'seller', 'brand')
+    fields = ('name', 'price', 'description', 'product_category', 'seller', 'brand')
     search_fields = ('name', )
 
 
@@ -31,3 +32,5 @@ admin.site.register(ProductCategory)
 admin.site.register(Seller)
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Brand)
+admin.site.register(Currency)
+

@@ -5,19 +5,23 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
+
     <div class="row my-4">
 
     {% for product in products %}
         <div class="col">
-            <div class="card" style="width: 12rem;">
+            <div class="card border-success">
+                <h5 class="card-header">{{ product.name }}</h5>
                 <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description }}</p>
+                    <p>Price: {{ product.price }} Euro </p>
                     <p>Brand: {{ product.brand.name }}</p>
                     <p>Category: {{ product.product_category.name }}</p>
-                        <a href="{% url 'add_to_cart' product.pk %}">Add to Cart</a>
-                        <a href="{% url 'consumer:product_details' product.pk %}">Details</a>
+                    <div class="card-footer bg-transparent border-success">
+                        <a href="{% url 'order:add_to_cart' product.pk %}">Add to Cart</a>
+                        <a class="ml-1" href="{% url 'consumer:product_details' product.pk %}">Details</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,6 +32,7 @@
         {% endif %}
 
     {% endfor %}
+
     </div>
 </div>
 {% endblock content %}
