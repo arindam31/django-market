@@ -1,15 +1,27 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-
-class Address(models.Model):
-    location = models.CharField(max_length=200)
-    pincode = models.PositiveIntegerField()
-    default = models.BooleanField(default=False)
+from django.shortcuts import reverse
 
 
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('consumer:profile', kwargs={'pk': self.pk})
+
+
+class Address(models.Model):
+    title = models.CharField(max_length=80)
+    location = models.CharField(max_length=200)
+    pincode = models.PositiveIntegerField()
+    default = models.BooleanField(default=False)
+    consumer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.location
+
+    class Meta:
+        verbose_name_plural = 'Address Book'
 
 
 class ProductCategory(models.Model):
@@ -28,7 +40,7 @@ class ProductCategory(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = "ProductCategories"
+        verbose_name_plural = "Product Categories"
 
     def __str__(self):
         return self.name
@@ -53,6 +65,9 @@ class Brand(models.Model):
 class Currency(models.Model):
     name = models.CharField(max_length=50)
     value = models.DecimalField(max_digits=7, decimal_places=2, default=0)
+
+    class Meta:
+        verbose_name_plural = 'World Currencies'
 
 
 class Product(models.Model):

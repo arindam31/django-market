@@ -3,8 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import Brand, CustomUser, Product, ProductCategory, Seller
-from .models import Currency
+from consumer.models import Brand, CustomUser, Product, ProductCategory, Seller
+from consumer.models import Currency, Address
 
 
 class CustomUserAdmin(UserAdmin):
@@ -27,10 +27,17 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', )
 
 
+class AddressAdmin(admin.ModelAdmin):
+    model = Address
+
+    list_display = ['location', 'consumer', 'default']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductCategory)
 admin.site.register(Seller)
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Brand)
 admin.site.register(Currency)
+admin.site.register(Address, AddressAdmin)
 

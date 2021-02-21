@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Profile: {{ user.username }}
@@ -6,12 +7,94 @@
 
 {% block content %}
 <div class="container">
-    <div class="jumbotron border rounded">
-        <h1 class="display-4">Full name: {{ user.first_name }} {{ user.last_name }}</h1>
-        <p class="lead">Username: {{ user.username }}</p>
-        <p class="lead">Email: {{ user.email }}</p>
-        <p class="lead">Age: {{ user.age }}</p>
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+        <h1 class="display-4 text-white">Full name: {{ user.first_name }} {{ user.last_name }}</h1>
+        <p class="lead text-white">Username: {{ user.username }}</p>
+        <p class="lead text-white">Email: {{ user.email }}</p>
+        <p class="lead text-white">Age: {{ user.age }}</p>
     </div>
+    <hr>
+
+{% if addresses.count > 0 %}
+<h4 class="display-4">
+    My Address Book | {{ addresses.count }} |
+    <a class="btn btn-primary text-white" href="{% url 'consumer:add_address' user.id %}">Add</a>
+</h4>
+<div class="row my-4">
+
+        {% for address in addresses %}
+         <div class="col">
+            <div class="card bg-light" style="width: 18rem;">
+                <h5 class="card-header">
+
+                    <div class="row">
+                        <div class="col">
+                            {{ address.title }}
+                        </div>
+                        <div class="col">
+                             <!-- Modal -->
+                            <div class="modal fade" id="deleteAddress" tabindex="-1" role="dialog" aria-labelledby="DeleteAddress" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteAddressTitle">Are you sure?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ...
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-danger">Remove</button>
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <button class="btn btn-primary px-3" type="button" data-toggle="modal" data-target="#editAddress">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-danger px-3" type="button" data-toggle="modal" data-target="#deleteAddress">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </h5>
+                <div class="card-body text-center">
+                    <p>{{ address.location }}</p>
+                    <p>{{ address.pincode }}</p>
+                    {% if address.default %}
+                    <div class="form-check">
+                        <input checked="checked"
+                               type="checkbox"
+                               value=""
+                               class="form-check-input"
+                               id="defaultAddress">
+                         <label class="form-check-label" for="defaultAddress">
+                          "Default"
+                        </label>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+         </div>
+
+        {% if forloop.counter|divisibleby:"3" %}
+                </div>
+                <div class="row my-4">
+            {% endif %}
+
+        {% endfor %}
+    {% else %}
+                    <h1 class="display-4">No Addresses added yet! Add some ;)</h1>
+                    <a class="btn btn-primary text-white" href="{% url 'consumer:add_address' user.id %}">Add</a>
+    {% endif %}
+
 </div>
 
+
+
+
+</div>
 {% endblock content %}
