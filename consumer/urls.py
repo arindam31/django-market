@@ -15,4 +15,5 @@ urlpatterns = [
     path('signup/', views_user.SignUpView.as_view(), name='register'),
     path('customer/<slug:pk>/', views_user.UserDetailsView.as_view(), name='profile'),
     path('search/', views_product.search_product, name='search_product'),
+    path('addAddress/<int:user_id>', views_user.AddressCreateView.as_view(), name='add_address'),
 ]
