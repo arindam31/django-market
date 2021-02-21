@@ -7,17 +7,59 @@
 {% block content %}
 <div class="container">
     <div class="my-4">
-    <ul class="list-group">
-    {% for cart_item in cart %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <p>{{ cart_item.item.name }}, {{ cart_item.item.brand.name }}</p>
-        <p>{{ cart_item.item.price }}</p>
+    <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product</th>
+      <th scope="col">Brand</th>
+      <th scope="col">Unit Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Total Price</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+    <tbody>
 
-        <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.quantity }}</span></p>
-        <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.unit_total }}</span></p>
-    </li>
+    {% for cart_item in cart %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ cart_item.item.name }} </td>
+            <td>{{ cart_item.item.brand.name }}</td>
+            <td>{{ cart_item.item.price }}</td>
+
+            <td><span class="badge badge-primary badge-pill">{{ cart_item.quantity }}</span></td>
+            <td><span class="badge badge-primary badge-pill">{{ cart_item.unit_total }}</span></td>
+            <td>
+                <div>
+                    <a href="{% url 'order:edit_cart_item' cart_item.pk %}" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteCartItem"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                     <!-- Modal -->
+                    <div class="modal fade" id="deleteCartItem" tabindex="-1" role="dialog" aria-labelledby="DeleteCartItem" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteCartItemTitle">Are you sure?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        This will remove the item from your cart!
+                                      </div>
+                                      <div class="modal-footer">
+                                          <a href="{% url 'order:remove_cart_item' cart_item.id %}" class="btn btn-danger">Remove</a>
+                                          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                </div>
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </tbody>
+    </table>
     </div>
     <hr class="my-4">
     <div class="card">
