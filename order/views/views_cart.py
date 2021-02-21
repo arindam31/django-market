@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
 from order.models import Cart, CartItem
 from consumer.models import Product
+from order.forms import EditCartItemForm
+from django.views.generic import UpdateView
 
 
 def get_cart(request):
@@ -40,4 +43,13 @@ def add_to_cart(request, product_id):
             _cart_item = CartItem.objects.create(item=product, quantity=1)
             cart.cart_item.add(_cart_item)
         return redirect('order:user_cart')
+
+
+class EditCartItem(UpdateView):
+    model = CartItem
+    template_name = 'order/cart_edit.html'
+    form_class = EditCartItemForm
+
+    def get_success_url(self):
+        return reverse_lazy('order:user_cart')
 

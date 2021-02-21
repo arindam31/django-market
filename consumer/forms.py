@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import Field
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 from consumer.models import CustomUser, Address

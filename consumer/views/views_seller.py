@@ -14,6 +14,7 @@ def product_by_seller(request, seller_id):
     products = Product.objects.filter(seller=seller_id)
     return render(request, template_name='consumer/all_products.html', context={'products': products})
 
+
 class SellerListView(ListView):
     model = Seller
     template_name = 'consumer/all_sellers.html'

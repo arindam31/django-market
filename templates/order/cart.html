@@ -15,6 +15,10 @@
 
         <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.quantity }}</span></p>
         <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.unit_total }}</span></p>
+        <div>
+        <a href="{% url 'order:edit_cart_item' cart_item.pk %}" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i></a>
+        <a href="{% url 'order:edit_cart_item' cart_item.pk %}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </div>
     </li>
     {% endfor %}
     </ul>
