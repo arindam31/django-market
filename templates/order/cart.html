@@ -17,7 +17,27 @@
         <p>Quantity: <span class="badge badge-primary badge-pill">{{ cart_item.unit_total }}</span></p>
         <div>
         <a href="{% url 'order:edit_cart_item' cart_item.pk %}" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i></a>
-        <a href="{% url 'order:edit_cart_item' cart_item.pk %}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteCartItem"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                             <!-- Modal -->
+                            <div class="modal fade" id="deleteCartItem" tabindex="-1" role="dialog" aria-labelledby="DeleteCartItem" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteCartItemTitle">Are you sure?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ...
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-danger">Remove</button>
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
         </div>
     </li>
     {% endfor %}
