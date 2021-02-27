@@ -9,14 +9,14 @@ from django.views.generic import DetailView, TemplateView
 from consumer.models import Product, ProductCategory
 
 
-def all_products(request):
+def last_updated_products(request):
     """
-    Get all products.
+    Get last 10 products by updated_at field.
 
     :param request:
     :return: All products
     """
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-updated_at')[:10]
     return render(request, template_name='consumer/all_products.html', context={'products': products})
 
 

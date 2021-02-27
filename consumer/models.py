@@ -3,6 +3,14 @@ from django.db import models
 from django.shortcuts import reverse
 
 
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
 
@@ -70,7 +78,7 @@ class Currency(models.Model):
         verbose_name_plural = 'World Currencies'
 
 
-class Product(models.Model):
+class Product(TimeStampMixin):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=300)
     product_category = models.ForeignKey(ProductCategory, on_delete=models.RESTRICT)

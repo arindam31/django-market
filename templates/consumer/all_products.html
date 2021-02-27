@@ -8,9 +8,9 @@
 <div class="container">
 
     <div class="row my-4">
-
+        <div class="col-2"></div>
     {% for product in products %}
-        <div class="col">
+        <div class="col-2">
             <div class="card border-success">
                 <h5 class="card-header">{{ product.name }}</h5>
                 <div class="card-body">
@@ -26,9 +26,10 @@
             </div>
         </div>
 
-        {% if forloop.counter|divisibleby:"5" %}
-            </div>
+        {% if forloop.counter|divisibleby:"4" %}
+            </div> <!-- End the row -->
             <div class="row my-4">
+                <div class="col-2"></div>
         {% endif %}
 
     {% endfor %}
