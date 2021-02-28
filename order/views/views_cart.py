@@ -9,15 +9,22 @@ from django.views.generic import UpdateView
 
 def get_cart(request):
     user = request.user
+    template_name = 'order/cart.html'
+
     if not user.is_authenticated:
         redirect('login')
 
     if request.method == 'GET':
         cart = Cart.objects.get(consumer=user)
         amount_each_item, total_bill = cart.cart_each_item_total()
-        return render(request,
-                      template_name='order/cart.html',
-                      context={'cart': amount_each_item, 'cart_total': total_bill})
+        if amount_each_item:
+            return render(request,
+                          template_name=template_name,
+                          context={'cart': amount_each_item, 'cart_total': total_bill})
+        else:
+            return render(request,
+                          template_name=template_name,
+                          context={'message': 'No items. Please add some items.'})
 
 
 def add_to_cart(request, product_id):

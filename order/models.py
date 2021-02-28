@@ -31,13 +31,17 @@ class Cart(models.Model):
         :return:
         """
         # Get all products in cart with quantity.
-        cart_details = self.cart_item.all().aggregate(Sum('item__price'), Sum('quantity'))
-        return cart_details
+        if self.cart_item.exists():
+            cart_details = self.cart_item.all().aggregate(Sum('item__price'), Sum('quantity'))
+            return cart_details
+        return False
 
     def cart_each_item_total(self):
-        amount_each_item = self.cart_item.filter().annotate(
-            unit_total=ExpressionWrapper(Sum(F('item__price') * F('quantity')), output_field=FloatField()))
+        if self.cart_item.exists():
+            amount_each_item = self.cart_item.filter().annotate(
+                unit_total=ExpressionWrapper(Sum(F('item__price') * F('quantity')), output_field=FloatField()))
 
-        total_bill = amount_each_item.aggregate(Sum('unit_total'))
-        return amount_each_item, total_bill
+            total_bill = amount_each_item.aggregate(Sum('unit_total'))
+            return amount_each_item, total_bill
+        return False, False
 
