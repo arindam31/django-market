@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from consumer.views.views_product import all_products
+from consumer.views.views_product import home
 from consumer.serializers import UserViewSet, ProductViewSet, ProductCategoryViewSet
 from consumer.serializers import SellerViewSet, BrandViewSet
 
@@ -36,6 +36,6 @@ urlpatterns = [
     path('order/', include('order.urls')),  # All urls in consumer url file will start with this.
     path('consumer/', include('consumer.urls', namespace='consumer')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('', all_products, name='home'),
     path('api/v1/consumer/', include(router.urls)),
+    path('', home, name='home'),
 ]

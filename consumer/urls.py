@@ -6,7 +6,7 @@ from consumer.views import views_product, views_seller, views_user
 
 app_name = 'consumer'
 urlpatterns = [
-    path('product/<int:pk>', views_product.ProductDetails.as_view(), name='product_details'),
+    path('product/details/<int:pk>', views_product.ProductDetails.as_view(), name='product_details'),
     path('productcategory/<int:product_category_id>',
          views_product.product_category_all_products,
          name='product_by_category'),
