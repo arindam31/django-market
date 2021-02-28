@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, TemplateView
 
 from consumer.models import Product, ProductCategory
+from consumer.filters import ProductFilter
 
 
 def last_updated_products(request):
@@ -17,7 +18,9 @@ def last_updated_products(request):
     :return: All products
     """
     products = Product.objects.all().order_by('-updated_at')[:10]
-    return render(request, template_name='consumer/all_products.html', context={'products': products})
+    product_filter = ProductFilter(request.GET, queryset=Product.objects.all())
+    return render(request, template_name='consumer/all_products.html',
+                  context={'filter': product_filter})
 
 
 def product_category_all_products(request, product_category_id):
@@ -54,6 +57,12 @@ def search_product(request):
         products = Product.objects.filter(
             Q(name__icontains=keyword) | Q(description__icontains=keyword)).order_by('name')
         return render(request, template_name='consumer/all_products.html', context={'products': products})
+
+
+def filter_by(request):
+    products = Product.objects.all()
+    product_filter = ProductFilter(request.GET, queryset=products)
+    return render(request, template_name='consumer/filters.html', context={'filter': product_filter})
 
 
 class HomeView(TemplateView):

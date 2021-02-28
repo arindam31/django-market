@@ -8,8 +8,10 @@
 <div class="container">
 
     <div class="row my-4">
-        <div class="col-2"></div>
-    {% for product in products %}
+        <div class="col-2">
+            {% include 'consumer/filters.html' %}
+        </div>
+    {% for product in filter.qs %}
         <div class="col-2">
             <div class="card border-success">
                 <h5 class="card-header">{{ product.name }}</h5>
