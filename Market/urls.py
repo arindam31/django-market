@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from consumer.views.views_product import last_updated_products
+from consumer.views.views_product import home
 from consumer.serializers import UserViewSet, ProductViewSet, ProductCategoryViewSet
 from consumer.serializers import SellerViewSet, BrandViewSet
 
@@ -37,5 +37,5 @@ urlpatterns = [
     path('consumer/', include('consumer.urls', namespace='consumer')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/consumer/', include(router.urls)),
-    path('', last_updated_products, name='home'),
+    path('', home, name='home'),
 ]

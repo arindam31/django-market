@@ -10,14 +10,13 @@ from consumer.models import Product, ProductCategory
 from consumer.filters import ProductFilter
 
 
-def last_updated_products(request):
+def home(request):
     """
     Get last 10 products by updated_at field.
 
     :param request:
     :return: All products
     """
-    products = Product.objects.all().order_by('-updated_at')[:10]
     product_filter = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, template_name='consumer/all_products.html',
                   context={'filter': product_filter})
@@ -32,7 +31,8 @@ def product_category_all_products(request, product_category_id):
        """
     product_category = ProductCategory.objects.get(id=product_category_id)
     _all_products = Product.objects.filter(product_category=product_category)
-    return render(request, template_name='consumer/all_products.html', context={'products': _all_products})
+    product_filter = ProductFilter(request.GET, queryset=_all_products)
+    return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 def product_by_seller(request, seller_id):
@@ -43,7 +43,8 @@ def product_by_seller(request, seller_id):
     :return:
     """
     products = Product.objects.filter(seller=seller_id)
-    return render(request, template_name='consumer/all_products.html', context={'products': products})
+    product_filter = ProductFilter(request.GET, queryset=products)
+    return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 def search_product(request):
@@ -56,13 +57,8 @@ def search_product(request):
         keyword = request.GET.get('keyword')
         products = Product.objects.filter(
             Q(name__icontains=keyword) | Q(description__icontains=keyword)).order_by('name')
-        return render(request, template_name='consumer/all_products.html', context={'products': products})
-
-
-def filter_by(request):
-    products = Product.objects.all()
-    product_filter = ProductFilter(request.GET, queryset=products)
-    return render(request, template_name='consumer/filters.html', context={'filter': product_filter})
+        product_filter = ProductFilter(request.GET, queryset=products)
+        return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 class HomeView(TemplateView):
