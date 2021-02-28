@@ -2,22 +2,35 @@
 Views for Product.
 """
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import DetailView, TemplateView
 
 from consumer.models import Product, ProductCategory
+from consumer.filters import ProductFilter
 
 
-def all_products(request):
+def home(request):
     """
-    Get all products.
+    Get last 10 products by updated_at field.
 
     :param request:
     :return: All products
     """
-    products = Product.objects.all()
-    return render(request, template_name='consumer/all_products.html', context={'products': products})
+    products_all = Product.objects.all()
+    product_filter = ProductFilter(request.GET, queryset=products_all)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(product_filter.qs, 12)
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    return render(request, template_name='consumer/all_products.html',
+                  context={'products': products, 'filter': product_filter})
 
 
 def product_category_all_products(request, product_category_id):
@@ -29,7 +42,8 @@ def product_category_all_products(request, product_category_id):
        """
     product_category = ProductCategory.objects.get(id=product_category_id)
     _all_products = Product.objects.filter(product_category=product_category)
-    return render(request, template_name='consumer/all_products.html', context={'products': _all_products})
+    product_filter = ProductFilter(request.GET, queryset=_all_products)
+    return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 def product_by_seller(request, seller_id):
@@ -40,7 +54,8 @@ def product_by_seller(request, seller_id):
     :return:
     """
     products = Product.objects.filter(seller=seller_id)
-    return render(request, template_name='consumer/all_products.html', context={'products': products})
+    product_filter = ProductFilter(request.GET, queryset=products)
+    return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 def search_product(request):
@@ -53,7 +68,8 @@ def search_product(request):
         keyword = request.GET.get('keyword')
         products = Product.objects.filter(
             Q(name__icontains=keyword) | Q(description__icontains=keyword)).order_by('name')
-        return render(request, template_name='consumer/all_products.html', context={'products': products})
+        product_filter = ProductFilter(request.GET, queryset=products)
+        return render(request, template_name='consumer/all_products.html', context={'filter': product_filter})
 
 
 class HomeView(TemplateView):

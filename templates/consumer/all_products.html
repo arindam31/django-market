@@ -8,31 +8,40 @@
 <div class="container">
 
     <div class="row my-4">
-
-    {% for product in products %}
-        <div class="col">
-            <div class="card border-success">
-                <h5 class="card-header">{{ product.name }}</h5>
-                <div class="card-body">
-                    <p class="card-text">{{ product.description }}</p>
-                    <p>Price: {{ product.price }} Euro </p>
-                    <p>Brand: {{ product.brand.name }}</p>
-                    <p>Category: {{ product.product_category.name }}</p>
-                    <div class="card-footer bg-transparent border-success">
-                        <a href="{% url 'order:add_to_cart' product.pk %}">Add to Cart</a>
-                        <a class="ml-1" href="{% url 'consumer:product_details' product.pk %}">Details</a>
+        <div class="col-2">
+            {% include 'consumer/filters.html' %}
+        </div>
+        {% for product in products %}
+            <div class="col-2">
+                <div class="card border-success">
+                    <h5 class="card-header">{{ product.name }}</h5>
+                    <div class="card-body">
+                        <p class="card-text">{{ product.description }}</p>
+                        <p>Price: {{ product.price }} Euro </p>
+                        <p>Brand: {{ product.brand.name }}</p>
+                        <p>Category: {{ product.product_category.name }}</p>
+                        <div class="card-footer bg-transparent border-success">
+                            <a href="{% url 'order:add_to_cart' product.pk %}">Add to Cart</a>
+                            <a class="ml-1" href="{% url 'consumer:product_details' product.pk %}">Details</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {% if forloop.counter|divisibleby:"4" %}
+                </div> <!-- End the row -->
+                <div class="row my-4">
+                    <div class="col-2"></div>
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            {% include 'consumer/pagination.html' %}
         </div>
-
-        {% if forloop.counter|divisibleby:"5" %}
-            </div>
-            <div class="row my-4">
-        {% endif %}
-
-    {% endfor %}
-
     </div>
 </div>
 {% endblock content %}
